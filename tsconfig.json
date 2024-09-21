@@ -1,21 +1,32 @@
 {
-    "compilerOptions": {
-      "rootDirs": ["src"],
-      "outDir": "dist",
-      "lib": ["es2020"],
-      "target": "es2020",
-      "module": "esnext",
-      "moduleResolution": "node",
-      "esModuleInterop": true,
-      "allowImportingTsExtensions": true,
-      "experimentalDecorators": true,
-      "emitDecoratorMetadata": true,
-      "noEmit": true,
-      "types": ["node"]
-    },
-    "strict": true,
-    "ts-node": {
-      "esm": true,
-      "experimentalSpecifierResolution": "node"
-    }
-  }
+  "compilerOptions": {
+    "target": "es2017",
+    "lib": [
+      "es2017",
+      "esnext.asynciterable"
+    ],
+    "typeRoots": [
+      "./node_modules/@types",
+      "./src/types"
+    ],
+    "allowSyntheticDefaultImports": true,
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
+    "forceConsistentCasingInFileNames": true,
+    "moduleResolution": "node",
+    "module": "commonjs",
+    "pretty": true,
+    "sourceMap": true,
+    "outDir": "./build",
+    "allowJs": true,
+    "noEmit": false,
+    "esModuleInterop": true
+  },
+  "include": [
+    "./src/*/"
+  ],
+  "exclude": [
+    "node_modules",
+    "tests"
+  ]
+}
