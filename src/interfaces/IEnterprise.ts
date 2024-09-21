@@ -5,6 +5,4 @@ export interface IEnterprise{
     type: string;
     comments: string;
     favorite: string;
-    token?: string;
-    session_active?: boolean;
 }

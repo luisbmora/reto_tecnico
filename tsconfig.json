@@ -8,6 +8,8 @@
       "moduleResolution": "node",
       "esModuleInterop": true,
       "allowImportingTsExtensions": true,
+      "experimentalDecorators": true,
+      "emitDecoratorMetadata": true,
       "noEmit": true,
       "types": ["node"]
     },
