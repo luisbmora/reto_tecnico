@@ -3,9 +3,9 @@ import { Joi } from 'celebrate';
 export const Uservalidator = {
     getUser:{
         params:{
-            id: Joi.string().length(24).hex().required().messages({
-                'string.length': 'ID must be exactly 24 characters long.',
-                'string.hex': 'ID must only contain hexadecimal characters.',
+            id: Joi.number().integer().min(1).required().messages({
+                'number.base': 'ID must be an integer.',
+                'number.min': 'ID must be at least 1.',
                 'any.required': 'ID is required.',
               }),
         },
@@ -21,15 +21,15 @@ export const Uservalidator = {
               'number.min': 'Limit must be at least 1.',
             }),
             name: Joi.string().optional().messages({
-              'string.base': 'First name must be a string.',
+              'string.base': 'Name must be a string.',
             }),
           }),
     },
     saveUser:{
         body: Joi.object({
             name: Joi.string().min(1).required().messages({
-                'string.min': 'The name must have at least 1 character.',
-                'any.required': 'The name is required.',
+                'string.min': 'Name must have at least 1 character.',
+                'any.required': 'Name is required.',
             }),
             password: Joi.string().min(6).max(120).required().messages({
                 'string.min': 'Password must be at least 6 characters long.',
@@ -40,7 +40,15 @@ export const Uservalidator = {
     },
     login:{
         body: Joi.object({
-            
+            email: Joi.string().email().required().messages({
+                'string.email': 'A valid email address is required.',
+                'any.required': 'Email is required.',
+            }),
+            password: Joi.string().min(6).max(120).required().messages({
+                'string.min': 'Password must be at least 6 characters long.',
+                'string.max': 'Password must not exceed 120 characters.',
+                'any.required': 'Password is required.',
+            }),
         })
     }
 }
