@@ -46,8 +46,4 @@ export const loginUser = (req: Request, res: Response, next: NextFunction) => {
       return res.status(500).json({ error: 'Error inesperado durante la autenticación.' });
     }
   }).catch(next)
-
-  const logOut = (req: Request, res: Response, next: NextFunction) => {
-    const userService = Container.get(UserService)
-  }
 }
