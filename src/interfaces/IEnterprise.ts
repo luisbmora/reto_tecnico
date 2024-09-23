@@ -1,5 +1,5 @@
 export interface IEnterprise{
-    _id?: string;
+    _id?: number;
     name: string;
     date: Date;
     type: string;

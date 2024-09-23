@@ -2,6 +2,7 @@
 import { Sequelize } from 'sequelize-typescript';
 import config from '../config/index';
 import { User } from '../models/user';
+import { Enterprises} from '../models/enterprises';
 
 const sequelize = new Sequelize({
   dialect: 'mysql',
@@ -10,7 +11,7 @@ const sequelize = new Sequelize({
   password: config.db_password,
   database: config.db_name,
 });
-sequelize.addModels([User]);
+sequelize.addModels([User, Enterprises]);
 
 
 export default sequelize;
