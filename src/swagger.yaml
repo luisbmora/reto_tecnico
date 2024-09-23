@@ -1,0 +1,206 @@
+/* la documentación de Swagger la genere con IA mediante chatGPT para 
+agilizar el proceso de documentación */
+openapi: 3.0.0
+info:
+  title: Enterprises API
+  description: |
+    API para gestionar empresas. Esta API incluye funcionalidades para crear, actualizar, eliminar empresas,
+    así como gestionar usuarios. 
+
+    **Nota:** La base de datos se puede poblar con datos iniciales de usuarios mediante seeders.
+    Estos seeders crean 5 usuarios de ejemplo para propósitos de desarrollo o testing.
+  version: 1.0.0
+servers:
+  - url: http://localhost:3000/
+    description: Servidor local de desarrollo
+
+tags:
+  - name: Enterprises
+    description: Operaciones relacionadas con empresas
+  - name: Seeders
+    description: Operaciones relacionadas con la inicialización de datos
+
+paths:
+  /enterprises:
+    get:
+      tags:
+        - Enterprises
+      summary: Obtener todas las empresas
+      description: Devuelve una lista de todas las empresas activas.
+      parameters:
+        - in: query
+          name: limit
+          schema:
+            type: integer
+          description: Número máximo de empresas para devolver
+        - in: query
+          name: offset
+          schema:
+            type: integer
+          description: Índice de la primera empresa a devolver
+      responses:
+        200:
+          description: Lista de empresas
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Enterprise'
+
+    post:
+      tags:
+        - Enterprises
+      summary: Crear una nueva empresa
+      description: Crea una nueva empresa con los datos proporcionados.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/NewEnterprise'
+      responses:
+        201:
+          description: Empresa creada con éxito
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Enterprise'
+        400:
+          description: Datos inválidos
+
+  /enterprises/{id}:
+    get:
+      tags:
+        - Enterprises
+      summary: Obtener una empresa por ID
+      description: Devuelve una empresa específica según el ID proporcionado.
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+          description: ID de la empresa
+      responses:
+        200:
+          description: Detalles de la empresa
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Enterprise'
+        404:
+          description: Empresa no encontrada
+
+    put:
+      tags:
+        - Enterprises
+      summary: Actualizar una empresa
+      description: Actualiza los datos de una empresa existente.
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+          description: ID de la empresa
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/NewEnterprise'
+      responses:
+        200:
+          description: Empresa actualizada con éxito
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Enterprise'
+        400:
+          description: Datos inválidos
+        404:
+          description: Empresa no encontrada
+
+    delete:
+      tags:
+        - Enterprises
+      summary: Eliminar una empresa
+      description: Marca una empresa como inactiva (eliminación lógica).
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+          description: ID de la empresa
+      responses:
+        200:
+          description: Empresa eliminada con éxito
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Enterprise'
+        404:
+          description: Empresa no encontrada
+
+components:
+  schemas:
+    Enterprise:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: ID único de la empresa
+        name:
+          type: string
+          description: Nombre de la empresa
+        date:
+          type: string
+          format: date
+          description: Fecha de fundación de la empresa
+        type:
+          type: string
+          description: Tipo de empresa
+        comments:
+          type: string
+          description: Comentarios adicionales
+        favorite:
+          type: string
+          description: Indicador de si la empresa es favorita
+        isActive:
+          type: boolean
+          description: Si la empresa está activa o no
+      required:
+        - name
+        - date
+        - type
+        - isActive
+
+    NewEnterprise:
+      type: object
+      properties:
+        name:
+          type: string
+          description: Nombre de la empresa
+        date:
+          type: string
+          format: date
+          description: Fecha de fundación de la empresa
+        type:
+          type: string
+          description: Tipo de empresa
+        comments:
+          type: string
+          description: Comentarios adicionales
+        favorite:
+          type: string
+          description: Indicador de si la empresa es favorita
+        isActive:
+          type: boolean
+          description: Si la empresa está activa o no
+      required:
+        - name
+        - date
+        - type
+        - isActive
