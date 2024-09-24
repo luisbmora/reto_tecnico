@@ -48,9 +48,6 @@ export const deleteEnterprise = async (req: Request, res: Response, next: NextFu
 
     try {
         const enterprise = await enterpriseService.deleteEnterprise(id);
-        if (!enterprise) {
-            return res.status(404).json({ message: 'Empresa no encontrada' });
-        }
         res.status(204).send();
     } catch (error) {
         if (error instanceof APIError) {

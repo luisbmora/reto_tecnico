@@ -8,6 +8,7 @@ import { APIError } from "../types/error/api-error";
 import * as crypto from 'crypto';
 import Loger from '../loaders/logger';
 import { Enterprises } from "../models/enterprises";
+import { deleteEnterprise } from '../api/handlers/enterprise.handler';
 
 
 export class EnterpriseService {
@@ -68,17 +69,17 @@ export class EnterpriseService {
         }
     }
 
-    public async deleteEnterprise(id: number): Promise<Enterprises | null> {
-        try {
-            const enterprise = await this.enterprise.findByPk(id);
-            if (!enterprise) {
-                throw new APIError({ status: 404, message: 'Enterprise not found', stack: []  });
-            }
-            const deletedEnterprise = await enterprise.update({ isActive: false });
-            return deletedEnterprise;
-        } catch (error) {
-            Loger.error("Error al eliminar la empresa", error);
-            throw error;
+public async deleteEnterprise(id: number): Promise<any> {
+    try {
+        const enterprise = await this.enterprise.findByPk(id);
+        if (!enterprise) {
+            throw new APIError({ status: 404, message: 'Enterprise not found', stack: [] });
         }
+        await enterprise.destroy();
+    } catch (error) {
+        Loger.error("Error al eliminar la empresa", error);
+        throw error;
     }
+}
+
 }
