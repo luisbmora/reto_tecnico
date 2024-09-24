@@ -42,21 +42,21 @@ export const updateEnterprise = (req: Request, res: Response, next: NextFunction
         })
         .catch(next);
 }
-
-export const deleteEnterprise = (req: Request, res: Response, next: NextFunction) => {
+export const deleteEnterprise = async (req: Request, res: Response, next: NextFunction) => {
     const id = parseInt(req.params.id, 10); // Convertir el id a número
     const enterpriseService = Container.get(EnterpriseService);
+
     try {
-        enterpriseService.deleteEnterprise(id)
-            .then(enterprise => res.json(enterprise))
-            .catch(error => {
-                if (error instanceof APIError) {
-                    res.status(404).json({ message: error.message });
-                } else {
-                    res.status(500).json({ message: 'Internal server error' });
-                }
-            });
+        const enterprise = await enterpriseService.deleteEnterprise(id);
+        if (!enterprise) {
+            return res.status(404).json({ message: 'Empresa no encontrada' });
+        }
+        res.status(204).send();
     } catch (error) {
-        res.status(500).json({ message: 'Internal server error' });
+        if (error instanceof APIError) {
+            res.status(404).json({ message: error.message });
+        } else {
+            res.status(500).json({ message: 'Internal server error' });
+        }
     }
 }
