@@ -4,7 +4,7 @@ info:
   description: API para la gestión de usuarios y empresas
   version: 1.0.0
 servers:
-  - url: http://localhost:3000/api
+  - url: http://localhost:3000/api-docs
     description: Servidor local de desarrollo
 paths:
   /users/run/seeds:
