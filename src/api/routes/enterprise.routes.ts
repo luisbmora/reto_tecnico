@@ -12,7 +12,7 @@ export default (app: Router) => {
     //Routes
     route.get(
         '/',
-        // isAuth,
+        isAuth,
         // celebrate(UserValidator.getAll),
         EnterpriseHandlers.getEnterprises
     );
@@ -24,7 +24,7 @@ export default (app: Router) => {
 
     route.post(
         '/',
-        // isAuth,
+        isAuth,
         // celebrate(UserValidator.saveUser),
         EnterpriseHandlers.createEnterprise
     );

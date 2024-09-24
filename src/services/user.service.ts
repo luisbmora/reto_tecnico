@@ -76,6 +76,19 @@ export  class UserService {
     }
   }
 
+  // Logout del usuario
+  public async logout(id: number): Promise<any> {
+    try {
+      const user = await this.user.findByPk(id);
+      if (!user) {
+        throw new APIError({ status: 404, message: 'User not found', stack: [] });
+      }
+    } catch (error) {
+      Loger.error("Error al cerrar sesión", error);
+      throw error;  
+    }
+  }
+
   // Generar JWT token
   private generateJwtToken(user: User) {
     const expirationTime = moment().add(15, 'minutes').unix();

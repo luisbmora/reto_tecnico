@@ -3,12 +3,15 @@ import bodyParser from 'body-parser';
 import cors from 'cors';
 import routes from '../api';
 import config from '../config';
+import swaggerUi from 'swagger-ui-express';
+import YAML from 'yamljs';
 import path from 'path';
 import { isCelebrateError } from 'celebrate';
 
 
 
 export default ({ app }: { app: express.Application }) => {
+  const swaggerDocument = YAML.load(path.join(__dirname, '../swagger.yaml'));
 
   app.get("/status", (req, res) => {
     res.status(200).end();
@@ -21,7 +24,8 @@ export default ({ app }: { app: express.Application }) => {
   app.enable("trust proxy");
 
   app.use(cors());
-  
+  // Configura Swagger UI
+  app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
   app.use(bodyParser.json());
 

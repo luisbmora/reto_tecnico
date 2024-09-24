@@ -19,7 +19,7 @@ export class EnterpriseService {
     public async getEnterprises(limit = 10, offset = 0): Promise<IEnterprise[]> {
         try {
             const enterprises = await this.enterprise.findAll({
-                where: { isActive: true },
+                where: {  },
                 limit,     // Límite de resultados por página
                 offset,    // Para la paginación, el offset indica desde qué registro empezar
                 order: [['createdAt', 'DESC']]  // Ordenar por fecha de creación, descendente
